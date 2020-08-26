@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  rails:
+    image: retropenbar/smashtheque-app:${DOCKER_TAG_RAILS}
+    volumes:
+      - rails_public:/rails/public
+      - ./data/rails/log:/app/log
+    env_file:
+      - ./config/rails.env
+    restart: always
+
+  caddy:
+    image: abiosoft/caddy:${DOCKER_TAG_CADDY}
+    depends_on:
+      - rails
+    ports:
+      - ${EXTERNAL_2015_PORT}:2015
+      - ${EXTERNAL_443_PORT}:443
+      - ${EXTERNAL_80_PORT}:80
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile:ro
+      - ./data/caddy:/root/.caddy
+      - rails_public:/rails/public:ro
+    env_file:
+      - ./config/caddy.env
+    restart: always
+
+volumes:
+  rails_public:
