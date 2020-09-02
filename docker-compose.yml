@@ -24,6 +24,7 @@ services:
     depends_on:
       - redis
     image: retropenbar/smashtheque-app:${DOCKER_TAG_RAILS}
+    entrypoint: ["/usr/local/bin/docker-entrypoint-sidekiq.sh"]
     command: bundle exec sidekiq -C config/sidekiq.yml
     volumes:
       - ./data/sidekiq/log:/app/log
