@@ -2,14 +2,35 @@ version: '3'
 
 services:
 
+  redis:
+    image: redis:latest
+    env_file:
+      - ./config/redis.env
+    restart: always
+
   rails:
     image: retropenbar/smashtheque-app:${DOCKER_TAG_RAILS}
+    depends_on:
+      - redis
     volumes:
       - rails_public:/rails/public
       - ./data/rails/log:/app/log
     env_file:
+      - ./config/docker.env
       - ./config/rails.env
     restart: always
+
+  sidekiq:
+    depends_on:
+      - redis
+    image: retropenbar/smashtheque-app:${DOCKER_TAG_RAILS}
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    volumes:
+      - ./data/sidekiq/log:/app/log
+    env_file:
+      - ./config/docker.env
+      - ./config/rails.env
+    restart: on-failure
 
   caddy:
     image: abiosoft/caddy:${DOCKER_TAG_CADDY}
