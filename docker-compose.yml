@@ -33,6 +33,15 @@ services:
       - ./config/rails.env
     restart: on-failure
 
+  redbot:
+    image: phasecorex/red-discordbot
+    volumes:
+      - ./data/redbot:/data
+    env_file:
+      - ./config/docker.env
+      - ./config/redbot.env
+    restart: unless-stopped
+
   caddy:
     image: abiosoft/caddy:${DOCKER_TAG_CADDY}
     depends_on:
