@@ -18,6 +18,8 @@ services:
     env_file:
       - ./config/docker.env
       - ./config/rails.env
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "ruby", "service": "rails"}]'
     restart: always
 
   sidekiq:
@@ -31,6 +33,8 @@ services:
     env_file:
       - ./config/docker.env
       - ./config/rails.env
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "ruby", "service": "sidekiq"}]'
     restart: on-failure
 
   redbot:
