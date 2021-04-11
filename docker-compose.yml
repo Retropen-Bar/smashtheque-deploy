@@ -68,6 +68,7 @@ services:
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock:ro
      - /proc/:/host/proc/:ro
+     - ./data/datadog/run:/opt/datadog-agent/run:rw
      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
      - ./datadog/conf.d:/conf.d
 
