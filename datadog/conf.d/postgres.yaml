@@ -1,0 +1,7 @@
+init_config:
+
+instances:
+  - host: ${POSTGRES_HOST}
+    port: ${POSTGRES_PORT}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
