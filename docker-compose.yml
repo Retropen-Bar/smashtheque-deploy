@@ -71,6 +71,7 @@ services:
      - ./data/datadog/run:/opt/datadog-agent/run:rw
      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
      - ./datadog/conf.d:/conf.d
+     - ./datadog/init.d/89-copy-customfiles.sh:/etc/cont-init.d/89-copy-customfiles.sh
 
 volumes:
   rails_public:
