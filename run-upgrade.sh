@@ -7,6 +7,4 @@ set -e
 cd "$(dirname "$0")"
 
 /usr/bin/docker-compose pull
-/usr/bin/docker-compose down --remove-orphans
-/usr/bin/docker volume rm -f docker_rails_public
 /usr/bin/docker-compose up -d

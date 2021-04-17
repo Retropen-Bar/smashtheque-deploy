@@ -10,10 +10,7 @@ services:
 
   rails:
     image: retropenbar/smashtheque-app:${DOCKER_TAG_RAILS}
-    depends_on:
-      - redis
     volumes:
-      - rails_public:/rails/public
       - ./data/rails/log:/app/log
     env_file:
       - ./config/docker.env
@@ -23,8 +20,6 @@ services:
     restart: always
 
   sidekiq:
-    depends_on:
-      - redis
     image: retropenbar/smashtheque-app:${DOCKER_TAG_RAILS}
     entrypoint: ["/usr/local/bin/docker-entrypoint-sidekiq.sh"]
     command: bundle exec sidekiq -C config/sidekiq.yml
@@ -47,9 +42,7 @@ services:
     restart: unless-stopped
 
   caddy:
-    image: abiosoft/caddy:${DOCKER_TAG_CADDY}
-    depends_on:
-      - rails
+    image: retropenbar/smashtheque-caddy:${DOCKER_TAG_RAILS}
     ports:
       - ${EXTERNAL_2015_PORT}:2015
       - ${EXTERNAL_443_PORT}:443
@@ -57,7 +50,6 @@ services:
     volumes:
       - ./Caddyfile:/etc/Caddyfile:ro
       - ./data/caddy:/root/.caddy
-      - rails_public:/rails/public:ro
     env_file:
       - ./config/caddy.env
     restart: always
@@ -76,6 +68,3 @@ services:
      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
      - ./datadog/conf.d:/conf.d
      - ./datadog/init.d/89-copy-customfiles.sh:/etc/cont-init.d/89-copy-customfiles.sh
-
-volumes:
-  rails_public:
