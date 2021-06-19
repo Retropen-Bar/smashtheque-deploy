@@ -21,13 +21,14 @@ services:
 
   sidekiq:
     image: retropenbar/smashtheque-app:${DOCKER_TAG_RAILS}
-    entrypoint: ["/usr/local/bin/docker-entrypoint-sidekiq.sh"]
     command: bundle exec sidekiq -C config/sidekiq.yml
     volumes:
       - ./data/sidekiq/log:/app/log
     env_file:
       - ./config/docker.env
       - ./config/rails.env
+    environment:
+      RUN_DB_MIGRATE: 0
     labels:
       com.datadoghq.ad.logs: '[{"source": "ruby", "service": "sidekiq"}]'
     restart: on-failure
