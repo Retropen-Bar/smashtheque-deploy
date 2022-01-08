@@ -33,14 +33,14 @@ services:
       com.datadoghq.ad.logs: '[{"source": "ruby", "service": "sidekiq"}]'
     restart: on-failure
 
-  redbot:
-    image: phasecorex/red-discordbot
-    volumes:
-      - ./data/redbot:/data
-    env_file:
-      - ./config/docker.env
-      - ./config/redbot.env
-    restart: unless-stopped
+  #redbot:
+  #  image: phasecorex/red-discordbot
+  #  volumes:
+  #    - ./data/redbot:/data
+  #  env_file:
+  #    - ./config/docker.env
+  #    - ./config/redbot.env
+  #  restart: unless-stopped
 
   caddy:
     image: retropenbar/smashtheque-caddy:${DOCKER_TAG_RAILS}
