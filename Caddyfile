@@ -1,6 +1,8 @@
 {$CADDY_HOST} {
   root /rails/public
 
+  redir /planning/online /recurring_tournaments/planning
+
   proxy / rails:3000 {
     except /422.html /500.html /android-chrome-192x192.png /android-chrome-512x512.png /apple-touch-icon-precomposed.png /apple-touch-icon.png /favicon-16x16.png /favicon-32.png /favicon-32x32.png /favicon.ico /mstile-150x150.png /safari-pinned-tab.svg /robots.txt /assets /packs
     transparent
