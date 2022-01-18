@@ -7,4 +7,4 @@ set -e
 cd "$(dirname "$0")"
 
 /usr/bin/docker-compose pull
-/usr/bin/docker-compose up -d
+/usr/bin/docker-compose up -d redis rails sidekiq caddy
